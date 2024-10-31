@@ -6,7 +6,7 @@ class LoginUserUseCase {
     userRepository,
     authenticationRepository,
     authenticationTokenManager,
-    passwordHash,
+    passwordHash
   }) {
     this._userRepository = userRepository;
     this._authenticationRepository = authenticationRepository;
@@ -17,23 +17,32 @@ class LoginUserUseCase {
   async execute(useCasePayload) {
     const { username, password } = new UserLogin(useCasePayload);
 
-    const encryptedPassword = await this._userRepository.getPasswordByUsername(username);
+    const encryptedPassword =
+      await this._userRepository.getPasswordByUsername(username);
 
     await this._passwordHash.comparePassword(password, encryptedPassword);
 
     const id = await this._userRepository.getIdByUsername(username);
 
-    const accessToken = await this._authenticationTokenManager
-      .createAccessToken({ username, id });
-    const refreshToken = await this._authenticationTokenManager
-      .createRefreshToken({ username, id });
+    const accessToken =
+      await this._authenticationTokenManager.createAccessToken({
+        username,
+        id
+      });
+    const refreshToken =
+      await this._authenticationTokenManager.createRefreshToken({
+        username,
+        id
+      });
 
     const newAuthentication = new NewAuthentication({
       accessToken,
-      refreshToken,
+      refreshToken
     });
 
-    await this._authenticationRepository.addToken(newAuthentication.refreshToken);
+    await this._authenticationRepository.addToken(
+      newAuthentication.refreshToken
+    );
 
     return newAuthentication;
   }

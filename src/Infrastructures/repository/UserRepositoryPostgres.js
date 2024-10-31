@@ -12,7 +12,7 @@ class UserRepositoryPostgres extends UserRepository {
   async verifyAvailableUsername(username) {
     const query = {
       text: 'SELECT username FROM users WHERE username = $1',
-      values: [username],
+      values: [username]
     };
 
     const result = await this._pool.query(query);
@@ -28,7 +28,7 @@ class UserRepositoryPostgres extends UserRepository {
 
     const query = {
       text: 'INSERT INTO users VALUES($1, $2, $3, $4) RETURNING id, username, fullname',
-      values: [id, username, password, fullname],
+      values: [id, username, password, fullname]
     };
 
     const result = await this._pool.query(query);
@@ -39,7 +39,7 @@ class UserRepositoryPostgres extends UserRepository {
   async getPasswordByUsername(username) {
     const query = {
       text: 'SELECT password FROM users WHERE username = $1',
-      values: [username],
+      values: [username]
     };
 
     const result = await this._pool.query(query);
@@ -54,7 +54,7 @@ class UserRepositoryPostgres extends UserRepository {
   async getIdByUsername(username) {
     const query = {
       text: 'SELECT id FROM users WHERE username = $1',
-      values: [username],
+      values: [username]
     };
 
     const result = await this._pool.query(query);

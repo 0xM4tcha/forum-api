@@ -5,12 +5,16 @@ describe('a AddedThread entities', () => {
     // Arrange
     const payload = {
       id: 'thread-123',
-      title: 'dicoding',
+      title: 'dicoding'
       // owner: '',
-    }
+    };
 
     // Action and Assert
-    expect(() => new AddedThread(payload).toThrowError('ADDED_THREAD.NOT_CONTAIN_NEEDED_PROPERTY'));
+    expect(() =>
+      new AddedThread(payload).toThrowError(
+        'ADDED_THREAD.NOT_CONTAIN_NEEDED_PROPERTY'
+      )
+    );
   });
 
   it('should throw error when payload did not meet data type specification', () => {
@@ -18,11 +22,15 @@ describe('a AddedThread entities', () => {
     const payload = {
       id: 123,
       title: true,
-      owner: 'user-123',
-    }
+      owner: 'user-123'
+    };
 
     // Action and Assert
-    expect(() => new AddedThread(payload).toThrowError('ADDED_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION'));
+    expect(() =>
+      new AddedThread(payload).toThrowError(
+        'ADDED_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION'
+      )
+    );
   });
 
   it('should create addedThread object correctly', () => {
@@ -30,8 +38,8 @@ describe('a AddedThread entities', () => {
     const payload = {
       id: 'thread-123',
       title: 'dicoding',
-      owner: 'user-123',
-    }
+      owner: 'user-123'
+    };
 
     // Action
     const addedThread = new AddedThread(payload);

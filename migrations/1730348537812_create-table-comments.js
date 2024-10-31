@@ -2,35 +2,35 @@
 
 exports.shorthands = undefined;
 
-exports.up = pgm => {
+exports.up = (pgm) => {
   pgm.createTable('comments', {
     id: {
       type: 'VARCHAR(50)',
-      primaryKey: true,
+      primaryKey: true
     },
     thread_id: {
       type: 'VARCHAR(50)',
       notNull: true,
       references: '"threads"',
-      onDelete: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     content: {
       type: 'TEXT',
-      notNull: true,
+      notNull: true
     },
     date: {
       type: 'TIMESTAMP',
-      default: pgm.func('current_timestamp'),
+      default: pgm.func('current_timestamp')
     },
     owner: {
       type: 'VARCHAR(50)',
       notNull: true,
       references: '"users"',
-      onDelete: 'CASCADE',
-    },
+      onDelete: 'CASCADE'
+    }
   });
 };
 
-exports.down = pgm => {
+exports.down = (pgm) => {
   pgm.dropTable('comments');
 };

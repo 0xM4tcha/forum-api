@@ -7,18 +7,18 @@ const authentications = require('../../Interfaces/http/api/authentications');
 const createServer = async (container) => {
   const server = Hapi.server({
     host: process.env.HOST,
-    port: process.env.PORT,
+    port: process.env.PORT
   });
 
   await server.register([
     {
       plugin: users,
-      options: { container },
+      options: { container }
     },
     {
       plugin: authentications,
-      options: { container },
-    },
+      options: { container }
+    }
   ]);
 
   server.ext('onPreResponse', (request, h) => {
@@ -33,7 +33,7 @@ const createServer = async (container) => {
       if (translatedError instanceof ClientError) {
         const newResponse = h.response({
           status: 'fail',
-          message: translatedError.message,
+          message: translatedError.message
         });
         newResponse.code(translatedError.statusCode);
         return newResponse;
@@ -47,7 +47,7 @@ const createServer = async (container) => {
       // penanganan server error sesuai kebutuhan
       const newResponse = h.response({
         status: 'error',
-        message: 'terjadi kegagalan pada server kami',
+        message: 'terjadi kegagalan pada server kami'
       });
       newResponse.code(500);
       return newResponse;
