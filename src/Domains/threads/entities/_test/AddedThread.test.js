@@ -6,7 +6,6 @@ describe('a AddedThread entities', () => {
     const payload = {
       id: 'thread-123',
       title: 'dicoding'
-      // owner: '',
     };
 
     // Action and Assert

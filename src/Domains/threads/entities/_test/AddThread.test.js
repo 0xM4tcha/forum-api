@@ -1,12 +1,12 @@
-const NewThread = require('../NewThread');
+const AddThread = require('../AddThread');
 
-describe('a NewThread entities', () => {
+describe('a AddThread entities', () => {
   it('should throw error when payload did not contain needed property', () => {
     // Arrange
     const payload = {};
 
     // Action and Assert
-    expect(() => new NewThread(payload)).toThrowError(
+    expect(() => new AddThread(payload)).toThrowError(
       'NEW_THREAD.NOT_CONTAIN_NEEDED_PROPERTY'
     );
   });
@@ -14,24 +14,27 @@ describe('a NewThread entities', () => {
   it('should throw error when payload did not meet data type specification', () => {
     // Arrange
     const payload = {
+      userId: 1,
       title: 123,
       body: true
     };
     // Action and Assert
-    expect(() => new NewThread(payload)).toThrowError(
+    expect(() => new AddThread(payload)).toThrowError(
       'NEW_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION'
     );
   });
 
-  it('should create newThread object correctly', () => {
+  it('should create AddThread object correctly', () => {
     // Arrange
     const payload = {
+      userId: 'user-123',
       title: 'dicoding',
       body: 'Dicoding Indonesia'
     };
     // Action
-    const { title, body } = new NewThread(payload);
+    const { userId, title, body } = new AddThread(payload);
     // Assert
+    expect(userId).toEqual(payload.userId);
     expect(title).toEqual(payload.title);
     expect(body).toEqual(payload.body);
   });

@@ -1,6 +1,7 @@
-const NewThread = require('../../../Domains/threads/entities/NewThread');
+const AddThread = require('../../../Domains/threads/entities/AddThread');
 const AddedThread = require('../../../Domains/threads/entities/AddedThread');
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
+const UserRepository = require('../../../Domains/users/UserRepository');
 const AddThreadUseCase = require('../AddThreadUseCase');
 
 describe('AddThreadUseCase', () => {
@@ -10,6 +11,7 @@ describe('AddThreadUseCase', () => {
   it('should orchestrating the add thread action correctly', async () => {
     // Arrange
     const useCasePayload = {
+      userId: 'user-123',
       title: 'dicoding',
       body: 'Dicoding Indonesia'
     };
@@ -17,21 +19,25 @@ describe('AddThreadUseCase', () => {
     const mockAddedThread = new AddedThread({
       id: 'thread-123',
       title: useCasePayload.title,
-      body: useCasePayload.body,
       owner: 'user-123'
     });
 
     /** creating dependency of use case */
     const mockThreadRepository = new ThreadRepository();
+    const mockUserRepository = new UserRepository();
 
     /** mocking needed function */
+    mockUserRepository.verifyUserId = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve());
     mockThreadRepository.addThread = jest
       .fn()
       .mockImplementation(() => Promise.resolve(mockAddedThread));
 
-    /** creating use case instance */
+    /** creating use case instance  */
     const getThreadUseCase = new AddThreadUseCase({
-      threadRepository: mockThreadRepository
+      threadRepository: mockThreadRepository,
+      userRepository: mockUserRepository
     });
 
     // Action
@@ -42,13 +48,13 @@ describe('AddThreadUseCase', () => {
       new AddedThread({
         id: 'thread-123',
         title: useCasePayload.title,
-        body: useCasePayload.body,
         owner: 'user-123'
       })
     );
 
     expect(mockThreadRepository.addThread).toBeCalledWith(
-      new NewThread({
+      new AddThread({
+        userId: 'user-123',
         title: useCasePayload.title,
         body: useCasePayload.body
       })

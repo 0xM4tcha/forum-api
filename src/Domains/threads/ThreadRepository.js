@@ -1,13 +1,9 @@
 class ThreadRepository {
+  async validateId(id) {
+    throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
+
   async addThread(newThread) {
-    throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-  }
-
-  async addCommentOnThread(newComment) {
-    throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-  }
-
-  async deleteCommentOnThread(commentId) {
     throw new Error('THREAD_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 

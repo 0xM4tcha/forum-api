@@ -1,13 +1,16 @@
-const NewThread = require('../../Domains/threads/entities/NewThread');
+const AddThread = require('../../Domains/threads/entities/AddThread');
 
 class AddThreadUseCase {
-  constructor({ threadRepository }) {
+  constructor({ threadRepository, userRepository }) {
     this._threadRepository = threadRepository;
+    this._userRepository = userRepository;
   }
 
   async execute(useCasePayload) {
-    const newThread = new NewThread(useCasePayload);
-    return this._threadRepository.addThread(newThread);
+    const { userId } = useCasePayload;
+    await this._userRepository.verifyUserId(userId);
+    const addThread = new AddThread(useCasePayload);
+    return this._threadRepository.addThread(addThread);
   }
 }
 
