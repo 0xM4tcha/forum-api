@@ -11,7 +11,7 @@ class AddThread {
     const { title, body, userId } = payload;
 
     if (!title || !body || !userId) {
-      throw new Error('NEW_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
+      throw new Error('ADD_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
     if (
@@ -19,7 +19,7 @@ class AddThread {
       typeof body !== 'string' ||
       typeof userId !== 'string'
     ) {
-      throw new Error('NEW_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
+      throw new Error('ADD_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
   }
 }
