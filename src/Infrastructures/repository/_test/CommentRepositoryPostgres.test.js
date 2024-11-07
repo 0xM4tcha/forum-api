@@ -1,6 +1,7 @@
 const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
 const pool = require('../../database/postgres/pool');
 const AddComment = require('../../../Domains/comments/entities/AddComment');
+const DeleteComment = require('../../../Domains/comments/entities/DeleteComment');
 const AddedComment = require('../../../Domains/comments/entities/AddedComment');
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const CommentRepositoryPostgres = require('../CommentRepositoryPostgres');
@@ -100,6 +101,32 @@ describe('CommentRepositoryPostgres', () => {
           owner: 'user-123'
         })
       );
+    });
+  });
+
+  describe('deleteComment function', () => {
+    it('should persist deleteComment', async () => {
+      // Arrange
+      await CommentsTableTestHelper.addUser({ username: 'dicoding' });
+      await CommentsTableTestHelper.addThread({ title: 'test' });
+      
+      const deleteComment = new DeleteComment({
+        commentId: 'comment-123',
+        userId: 'user-123',
+        threadId: 'thread-123'
+      });
+
+      const fakeIdGenerator = () => '123';
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(
+        pool,
+        fakeIdGenerator
+      );
+      
+      // Action
+      const deletedComment =
+        await commentRepositoryPostgres.deleteComment(deleteComment);
+      // Assert
+      expect(deletedComment).toStrictEqual({ status: 'success' });
     });
   });
 });
