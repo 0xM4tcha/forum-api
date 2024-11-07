@@ -1,5 +1,6 @@
 const AddedThread = require('../../Domains/threads/entities/AddedThread');
 const ThreadRepository = require('../../Domains/threads/ThreadRepository');
+const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 
 class ThreadRepositoryPostgres extends ThreadRepository {
   constructor(pool, idGenerator) {
@@ -16,8 +17,8 @@ class ThreadRepositoryPostgres extends ThreadRepository {
 
     const result = await this._pool.query(query);
 
-    if (result.rowCount) {
-      throw new InvariantError('thread sudah ada');
+    if (!result.rowCount) {
+      throw new NotFoundError('threadId tidak valid');
     }
   }
 
