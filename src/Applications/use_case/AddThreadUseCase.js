@@ -8,9 +8,12 @@ class AddThreadUseCase {
 
   async execute(useCasePayload) {
     const { userId } = useCasePayload;
+
     await this._userRepository.verifyUserId(userId);
-    const addThread = new AddThread(useCasePayload);
-    return this._threadRepository.addThread(addThread);
+
+    const thread = new AddThread(useCasePayload);
+
+    return this._threadRepository.addThread(thread);
   }
 }
 

@@ -5,9 +5,8 @@ describe('a AddedComment entities', () => {
     // Arrange
     const payload = {
       id: '',
-      threadId: 'thread-123',
       content: 'comment dicoding',
-      owner: '',
+      owner: ''
     };
 
     // Action and Assert
@@ -22,9 +21,8 @@ describe('a AddedComment entities', () => {
     // Arrange
     const payload = {
       id: 1,
-      threadId: 2,
       content: 3,
-      owner: 4,
+      owner: 4
     };
 
     // Action and Assert
@@ -39,7 +37,6 @@ describe('a AddedComment entities', () => {
     // Arrange
     const payload = {
       id: 'comment-123',
-      threadId: 'thread-123',
       content: 'comment dicoding',
       owner: 'user-123'
     };
@@ -49,7 +46,6 @@ describe('a AddedComment entities', () => {
 
     // Assert
     expect(addedComment.id).toEqual(payload.id);
-    expect(addedComment.threadId).toEqual(payload.threadId);
     expect(addedComment.content).toEqual(payload.content);
     expect(addedComment.owner).toEqual(payload.owner);
   });

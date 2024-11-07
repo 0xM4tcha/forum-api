@@ -3,21 +3,19 @@ class AddedComment {
     this._verifyPayload(payload);
 
     this.id = payload.id;
-    this.threadId = payload.threadId;
     this.content = payload.content;
     this.owner = payload.owner;
   }
 
   _verifyPayload(payload) {
-    const { id, threadId, content, owner } = payload;
+    const { id, content, owner } = payload;
 
-    if (!id || !threadId || !content || !owner) {
+    if (!id || !content || !owner) {
       throw new Error('ADDED_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
     if (
       typeof id !== 'string' ||
-      typeof threadId !== 'string' ||
       typeof content !== 'string' ||
       typeof owner !== 'string'
     ) {
