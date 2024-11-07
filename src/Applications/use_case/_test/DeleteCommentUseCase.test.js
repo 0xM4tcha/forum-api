@@ -10,7 +10,7 @@ describe('DeleteCommentUseCase', () => {
     const useCasePayload = {
       commentId: 'comment-123',
       userId: 'user-123',
-      threadId: 'thread-123',
+      threadId: 'thread-123'
     };
 
     const mockDeleteComment = new DeleteComment({

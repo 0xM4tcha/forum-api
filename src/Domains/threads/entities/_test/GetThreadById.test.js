@@ -6,7 +6,8 @@ describe('a GetThreadById entities', () => {
     const payload = {};
 
     // Action and Assert
-    expect(() => new GetThreadById(payload).toThrowError(
+    expect(() =>
+      new GetThreadById(payload).toThrowError(
         'GET_THREAD.NOT_CONTAIN_NEEDED_PROPERTY'
       )
     );

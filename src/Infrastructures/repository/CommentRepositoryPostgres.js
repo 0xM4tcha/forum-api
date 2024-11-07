@@ -11,7 +11,7 @@ class CommentRepositoryPostgres extends CommentRepository {
   }
 
   async validateOwner(payload) {
-    const {commentId, userId} = payload;
+    const { commentId, userId } = payload;
     const query = {
       text: 'SELECT * FROM comments Where id = $1',
       values: [commentId]
@@ -59,7 +59,7 @@ class CommentRepositoryPostgres extends CommentRepository {
 
     return {
       status: 'success'
-    }
+    };
   }
 }
 

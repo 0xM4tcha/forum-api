@@ -16,7 +16,7 @@ class DeleteCommentUseCase {
 
     return {
       status: 'success'
-    }
+    };
   }
 }
 

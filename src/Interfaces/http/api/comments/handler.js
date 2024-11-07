@@ -40,7 +40,7 @@ class CommentsHandler {
     const deleteCommentUseCase = this._container.getInstance(
       DeleteCommentUseCase.name
     );
-    
+
     await deleteCommentUseCase.execute({
       threadId,
       commentId,

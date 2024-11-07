@@ -13,7 +13,7 @@ describe('GetThreadByIdUseCase', () => {
     };
 
     const mockGetThreadById = new GetThreadById({
-      threadId: 'thread-123',
+      threadId: 'thread-123'
     });
 
     /** creating dependency of use case */

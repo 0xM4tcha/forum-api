@@ -69,7 +69,9 @@ class ThreadRepositoryPostgres extends ThreadRepository {
         throw new NotFoundError('Thread tidak ditemukan');
       }
 
-      const comments = result.rows.sort((a, b) => new Date(a.comment_date) - new Date(b.comment_date))
+      const comments = result.rows.sort(
+        (a, b) => new Date(a.comment_date) - new Date(b.comment_date)
+      );
 
       return {
         id: result.rows[0].id,
@@ -81,12 +83,12 @@ class ThreadRepositoryPostgres extends ThreadRepository {
           id: row.comment_id,
           username: row.comment_username,
           date: row.comment_date,
-          content: row.comment_content,
-        })),
+          content: row.comment_content
+        }))
       };
-
     } catch (error) {
       console.log('error', error);
+      return error;
     }
   }
 }

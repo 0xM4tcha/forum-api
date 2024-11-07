@@ -109,7 +109,7 @@ describe('CommentRepositoryPostgres', () => {
       // Arrange
       await CommentsTableTestHelper.addUser({ username: 'dicoding' });
       await CommentsTableTestHelper.addThread({ title: 'test' });
-      
+
       const deleteComment = new DeleteComment({
         commentId: 'comment-123',
         userId: 'user-123',
@@ -121,7 +121,7 @@ describe('CommentRepositoryPostgres', () => {
         pool,
         fakeIdGenerator
       );
-      
+
       // Action
       const deletedComment =
         await commentRepositoryPostgres.deleteComment(deleteComment);

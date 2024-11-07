@@ -5,7 +5,7 @@ class GetThreadByIdUseCase {
 
   async execute(useCasePayload) {
     const { threadId } = useCasePayload;
-    
+
     return this._threadRepository.getThreadById(threadId);
   }
 }
