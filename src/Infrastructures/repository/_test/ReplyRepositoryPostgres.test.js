@@ -71,8 +71,7 @@ describe('ReplyRepositoryPostgres', () => {
       // Action
       await replyRepositoryPostgres.addReply(newReply);
       // Assert
-      const replies =
-        await RepliesTableTestHelper.findRepliesById('reply-123');
+      const replies = await RepliesTableTestHelper.findRepliesById('reply-123');
       expect(replies).toHaveLength(1);
     });
 
@@ -95,8 +94,7 @@ describe('ReplyRepositoryPostgres', () => {
         fakeIdGenerator
       );
       // Action
-      const addedReply =
-        await replyRepositoryPostgres.addReply(newReply);
+      const addedReply = await replyRepositoryPostgres.addReply(newReply);
       // Assert
       expect(addedReply).toStrictEqual(
         new AddedReply({

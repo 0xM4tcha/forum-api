@@ -55,7 +55,7 @@ describe('DeleteReplyUseCase', () => {
       commentRepository: mockCommentRepository,
       threadRepository: mockThreadRepository,
       userRepository: mockUserRepository,
-      replyRepository: mockReplyRepository,
+      replyRepository: mockReplyRepository
     });
 
     // Action

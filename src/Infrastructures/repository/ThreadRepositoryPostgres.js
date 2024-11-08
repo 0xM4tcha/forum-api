@@ -49,15 +49,24 @@ class ThreadRepositoryPostgres extends ThreadRepository {
               c.id AS comment_id,
               c.date AS comment_date,
               c.content AS comment_content,
-              us.username AS comment_username
+              us.username AS comment_username,
+              r.id AS reply_id,
+              r.comment_id AS reply_comment_id,
+              r.content AS reply_content,
+              r.date AS reply_date,
+              ur.username AS reply_username
             FROM 
                 threads t
             JOIN 
                 comments c ON t.id = c.thread_id
             JOIN
+                replies r ON c.id = r.comment_id
+            JOIN
                 users u ON t.owner = u.id
             JOIN
                 users us ON c.owner = us.id
+            JOIN
+                users ur ON r.owner = ur.id
             WHERE 
               t.id = $1`,
         values: [threadId]
@@ -69,22 +78,36 @@ class ThreadRepositoryPostgres extends ThreadRepository {
         throw new NotFoundError('Thread tidak ditemukan');
       }
 
-      const comments = result.rows.sort(
-        (a, b) => new Date(a.comment_date) - new Date(b.comment_date)
-      );
-
       return {
         id: result.rows[0].id,
         title: result.rows[0].title,
         body: result.rows[0].body,
         date: result.rows[0].date,
         username: result.rows[0].username,
-        comments: comments.map((row) => ({
-          id: row.comment_id,
-          username: row.comment_username,
-          date: row.comment_date,
-          content: row.comment_content
-        }))
+        comments: Object.values(
+          result.rows.reduce((acc, row) => {
+            if (!acc[row.comment_id]) {
+              acc[row.comment_id] = {
+                id: row.comment_id,
+                username: row.comment_username,
+                date: row.comment_date,
+                content: row.comment_content,
+                replies: []
+              };
+            }
+
+            if (row.reply_id) {
+              acc[row.comment_id].replies.push({
+                id: row.reply_id,
+                date: row.reply_date,
+                content: row.reply_content,
+                username: row.reply_username
+              });
+            }
+
+            return acc;
+          }, {})
+        )
       };
     } catch (error) {
       console.log('error', error);

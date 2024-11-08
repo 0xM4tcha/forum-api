@@ -14,10 +14,8 @@ class RepliesHandler {
     const { threadId, commentId } = request.params;
     const { id: userId } = request.auth.credentials;
 
-    const addReplyUseCase = this._container.getInstance(
-      AddReplyUseCase.name
-    );
-    
+    const addReplyUseCase = this._container.getInstance(AddReplyUseCase.name);
+
     const addedReply = await addReplyUseCase.execute({
       threadId,
       content,

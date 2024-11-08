@@ -19,7 +19,7 @@ describe('a DeleteReply entities', () => {
       threadId: 1,
       commentId: 1,
       replyId: 123,
-      userId: 1,
+      userId: 1
     };
     // Action and Assert
     expect(() => new DeleteReply(payload)).toThrowError(
@@ -33,7 +33,7 @@ describe('a DeleteReply entities', () => {
       threadId: 'thread-123',
       commentId: 'comment-123',
       replyId: 'reply-123',
-      userId: 'user-123',
+      userId: 'user-123'
     };
     // Action
     const { threadId, commentId, replyId } = new DeleteReply(payload);

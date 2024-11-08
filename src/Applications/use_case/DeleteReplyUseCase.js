@@ -1,5 +1,10 @@
 class DeleteReplyUseCase {
-  constructor({ replyRepository, commentRepository, userRepository, threadRepository }) {
+  constructor({
+    replyRepository,
+    commentRepository,
+    userRepository,
+    threadRepository
+  }) {
     this._replyRepository = replyRepository;
     this._commentRepository = commentRepository;
     this._userRepository = userRepository;
@@ -21,7 +26,6 @@ class DeleteReplyUseCase {
       status: 'success'
     };
   }
-
 }
 
 module.exports = DeleteReplyUseCase;

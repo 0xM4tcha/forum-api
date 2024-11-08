@@ -1,7 +1,12 @@
 const AddReply = require('../../Domains/replies/entities/AddReply');
 
 class AddReplyUseCase {
-  constructor({ replyRepository, threadRepository, userRepository, commentRepository }) {
+  constructor({
+    replyRepository,
+    threadRepository,
+    userRepository,
+    commentRepository
+  }) {
     this._replyRepository = replyRepository;
     this._userRepository = userRepository;
     this._threadRepository = threadRepository;
@@ -17,7 +22,7 @@ class AddReplyUseCase {
 
     const reply = new AddReply(useCasePayload);
 
-    return this._replyRepository.addReply(reply); 
+    return this._replyRepository.addReply(reply);
   }
 }
 

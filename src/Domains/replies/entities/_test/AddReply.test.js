@@ -19,7 +19,7 @@ describe('a AddReply entities', () => {
       userId: 1,
       threadId: 2,
       commentId: 3,
-      content: true,
+      content: true
     };
     // Action and Assert
     expect(() => new AddReply(payload)).toThrowError(
