@@ -52,6 +52,8 @@ describe('AddThreadUseCase', () => {
       })
     );
 
+    expect(mockUserRepository.verifyUserId).toBeCalledWith('user-123');
+ 
     expect(mockThreadRepository.addThread).toBeCalledWith(
       new AddThread({
         userId: 'user-123',
