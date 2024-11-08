@@ -10,8 +10,7 @@ class CommentRepositoryPostgres extends CommentRepository {
     this._idGenerator = idGenerator;
   }
 
-  async validateOwner(payload) {
-    const { commentId, userId } = payload;
+  async validateId(commentId) {
     const query = {
       text: 'SELECT * FROM comments Where id = $1',
       values: [commentId]
@@ -22,6 +21,20 @@ class CommentRepositoryPostgres extends CommentRepository {
     if (!result.rowCount) {
       throw new NotFoundError('Comment Not Found');
     }
+  }
+
+  async validateOwner(payload) {
+    const { commentId, userId } = payload;
+    const query = {
+      text: 'SELECT * FROM comments Where id = $1',
+      values: [commentId]
+    };
+
+    const result = await this._pool.query(query);
+
+    // if (!result.rowCount) {
+    //   throw new NotFoundError('Comment Not Found');
+    // }
 
     if (result.rows[0].owner !== userId) {
       throw new AuthorizationError('AuthorizationError');
