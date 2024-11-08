@@ -32,10 +32,6 @@ class CommentRepositoryPostgres extends CommentRepository {
 
     const result = await this._pool.query(query);
 
-    // if (!result.rowCount) {
-    //   throw new NotFoundError('Comment Not Found');
-    // }
-
     if (result.rows[0].owner !== userId) {
       throw new AuthorizationError('AuthorizationError');
     }
