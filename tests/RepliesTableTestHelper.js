@@ -48,7 +48,7 @@ const RepliesTableTestHelper = {
   async addReply({
     id = 'reply-123',
     commentId = 'comment-123',
-    content = 'comment',
+    content = 'reply',
     date = '2024-10-08T07:59:16.198Z',
     userId = 'user-123'
   }) {

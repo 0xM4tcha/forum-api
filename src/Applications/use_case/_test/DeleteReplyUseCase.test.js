@@ -39,6 +39,9 @@ describe('DeleteReplyUseCase', () => {
     mockCommentRepository.validateId = jest
       .fn()
       .mockImplementation(() => Promise.resolve());
+    mockReplyRepository.validateId = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve());
     mockReplyRepository.validateOwner = jest
       .fn()
       .mockImplementation(() => Promise.resolve());

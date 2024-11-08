@@ -1,5 +1,9 @@
 class ReplyRepository {
-  async validateOwner(id) {
+  async validateId(replyId) {
+    throw new Error('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
+
+  async validateOwner(payload) {
     throw new Error('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 

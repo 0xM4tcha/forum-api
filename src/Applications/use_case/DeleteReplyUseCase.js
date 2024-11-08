@@ -12,7 +12,8 @@ class DeleteReplyUseCase {
     await this._userRepository.verifyUserId(userId);
     await this._threadRepository.validateId(threadId);
     await this._commentRepository.validateId(commentId);
-    await this._replyRepository.validateOwner(replyId);
+    await this._replyRepository.validateId(replyId);
+    await this._replyRepository.validateOwner(useCasePayload);
 
     await this._replyRepository.deleteReply(useCasePayload);
 

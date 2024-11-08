@@ -56,6 +56,12 @@ DomainErrorTranslator._directories = {
   ),
   'ADD_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
     'tidak dapat membuat reply baru karena tipe data tidak sesuai'
+  ),
+  'DELETE_REPLY.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError(
+    'harus mengirimkan threadId, userId, commentId and replyId'
+  ),
+  'DELETE_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError(
+    'tidak dapat delete reply karena tipe data tidak sesuai'
   )
 };
 

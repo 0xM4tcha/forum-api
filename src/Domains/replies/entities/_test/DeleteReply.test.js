@@ -3,7 +3,9 @@ const DeleteReply = require('../DeleteReply');
 describe('a DeleteReply entities', () => {
   it('should throw error when payload did not contain needed property', () => {
     // Arrange
-    const payload = {};
+    const payload = {
+      userId: 'user-123'
+    };
 
     // Action and Assert
     expect(() => new DeleteReply(payload)).toThrowError(
@@ -16,7 +18,8 @@ describe('a DeleteReply entities', () => {
     const payload = {
       threadId: 1,
       commentId: 1,
-      replyId: 123
+      replyId: 123,
+      userId: 1,
     };
     // Action and Assert
     expect(() => new DeleteReply(payload)).toThrowError(
@@ -30,6 +33,7 @@ describe('a DeleteReply entities', () => {
       threadId: 'thread-123',
       commentId: 'comment-123',
       replyId: 'reply-123',
+      userId: 'user-123',
     };
     // Action
     const { threadId, commentId, replyId } = new DeleteReply(payload);

@@ -31,6 +31,9 @@ describe('DeleteCommentUseCase', () => {
     mockThreadRepository.validateId = jest
       .fn()
       .mockImplementation(() => Promise.resolve());
+    mockCommentRepository.validateId = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve());
     mockCommentRepository.validateOwner = jest
       .fn()
       .mockImplementation(() => Promise.resolve());

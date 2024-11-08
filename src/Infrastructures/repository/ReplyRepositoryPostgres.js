@@ -1,11 +1,41 @@
 const ReplyRepository = require('../../Domains/replies/ReplyRepository');
 const AddedReply = require('../../Domains/replies/entities/AddedReply');
+const AuthorizationError = require('../../Commons/exceptions/AuthorizationError');
+const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 
 class ReplyRepositoryPostgres extends ReplyRepository {
   constructor(pool, idGenerator) {
     super();
     this._pool = pool;
     this._idGenerator = idGenerator;
+  }
+
+  async validateId(replyId) {
+    const query = {
+      text: 'SELECT * FROM replies Where id = $1',
+      values: [replyId]
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rowCount) {
+      throw new NotFoundError('Reply Not Found');
+    }
+  }
+
+  async validateOwner(payload) {
+    const { replyId, userId } = payload;
+
+    const query = {
+      text: 'SELECT * FROM replies Where id = $1',
+      values: [replyId]
+    };
+
+    const result = await this._pool.query(query);
+
+    if (result.rows[0].owner !== userId) {
+      throw new AuthorizationError('AuthorizationError');
+    }
   }
 
   async addReply(newReply) {
@@ -23,24 +53,24 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     return new AddedReply({ ...result.rows[0] });
   }
 
-  // async deleteComment(payload) {
-  //   const { commentId, userId } = payload;
-  //   const content = '**komentar telah dihapus**';
-  //   const date = new Date().toISOString();
+  async deleteReply(payload) {
+    const { replyId, userId } = payload;
+    const content = '**balasan telah dihapus**';
+    const date = new Date().toISOString();
 
-  //   const query = {
-  //     text: `UPDATE comments
-  //       SET content = $2, date = $3
-  //       WHERE id = $1 AND owner = $4`,
-  //     values: [commentId, content, date, userId]
-  //   };
+    const query = {
+      text: `UPDATE replies
+        SET content = $2, date = $3
+        WHERE id = $1 AND owner = $4`,
+      values: [replyId, content, date, userId]
+    };
 
-  //   await this._pool.query(query);
+    await this._pool.query(query);
 
-  //   return {
-  //     status: 'success'
-  //   };
-  // }
+    return {
+      status: 'success'
+    };
+  }
 }
 
 module.exports = ReplyRepositoryPostgres;

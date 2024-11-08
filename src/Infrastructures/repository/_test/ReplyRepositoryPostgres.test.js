@@ -2,11 +2,7 @@ const RepliesTableTestHelper = require('../../../../tests/RepliesTableTestHelper
 const pool = require('../../database/postgres/pool');
 const AddReply = require('../../../Domains/replies/entities/AddReply');
 const AddedReply = require('../../../Domains/replies/entities/AddedReply');
-// const AddComment = require('../../../Domains/comments/entities/AddComment');
-// const DeleteComment = require('../../../Domains/comments/entities/DeleteComment');
-// const AddedComment = require('../../../Domains/comments/entities/AddedComment');
-// const InvariantError = require('../../../Commons/exceptions/InvariantError');
-// const CommentRepositoryPostgres = require('../CommentRepositoryPostgres');
+const DeleteReply = require('../../../Domains/replies/entities/DeleteReply');
 const ReplyRepositoryPostgres = require('../ReplyRepositoryPostgres');
 
 describe('ReplyRepositoryPostgres', () => {
@@ -112,29 +108,32 @@ describe('ReplyRepositoryPostgres', () => {
     });
   });
 
-  // describe('deleteComment function', () => {
-  //   it('should persist deleteComment', async () => {
-  //     // Arrange
-  //     await RepliesTableTestHelper.addUser({ username: 'dicoding' });
-  //     await RepliesTableTestHelper.addThread({ title: 'test' });
+  describe('deleteReply function', () => {
+    it('should persist deleteReply', async () => {
+      // Arrange
+      await RepliesTableTestHelper.addUser({ username: 'dicoding' });
+      await RepliesTableTestHelper.addThread({ title: 'dicoding' });
+      await RepliesTableTestHelper.addComment({ content: 'comment' });
+      await RepliesTableTestHelper.addReply({ content: 'reply' });
 
-  //     const deleteComment = new DeleteComment({
-  //       commentId: 'comment-123',
-  //       userId: 'user-123',
-  //       threadId: 'thread-123'
-  //     });
+      const deleteReply = new DeleteReply({
+        commentId: 'comment-123',
+        userId: 'user-123',
+        threadId: 'thread-123',
+        replyId: 'reply-123'
+      });
 
-  //     const fakeIdGenerator = () => '123';
-  //     const commentRepositoryPostgres = new CommentRepositoryPostgres(
-  //       pool,
-  //       fakeIdGenerator
-  //     );
+      const fakeIdGenerator = () => '123';
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(
+        pool,
+        fakeIdGenerator
+      );
 
-  //     // Action
-  //     const deletedComment =
-  //       await commentRepositoryPostgres.deleteComment(deleteComment);
-  //     // Assert
-  //     expect(deletedComment).toStrictEqual({ status: 'success' });
-  //   });
-  // });
+      // Action
+      const deletedReply =
+        await replyRepositoryPostgres.deleteReply(deleteReply);
+      // Assert
+      expect(deletedReply).toStrictEqual({ status: 'success' });
+    });
+  });
 });
