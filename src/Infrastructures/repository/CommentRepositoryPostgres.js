@@ -86,7 +86,7 @@ class CommentRepositoryPostgres extends CommentRepository {
       WHERE
         c.thread_id = $1`,
       values: [threadId]
-    }
+    };
 
     const result = await this._pool.query(query);
 

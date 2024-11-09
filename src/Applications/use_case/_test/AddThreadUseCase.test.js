@@ -44,7 +44,9 @@ describe('AddThreadUseCase', () => {
     const addedThread = await getThreadUseCase.execute(useCasePayload);
 
     // Assert
-    expect(mockUserRepository.verifyUserId).toBeCalledWith(useCasePayload.userId);
+    expect(mockUserRepository.verifyUserId).toBeCalledWith(
+      useCasePayload.userId
+    );
     expect(mockThreadRepository.addThread).toBeCalledWith(
       new AddThread({
         userId: 'user-123',

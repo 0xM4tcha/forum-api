@@ -87,7 +87,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
       WHERE
         r.comment_id = $1`,
       values: [commentId]
-    }
+    };
 
     const result = await this._pool.query(query);
 

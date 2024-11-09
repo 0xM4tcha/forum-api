@@ -96,7 +96,7 @@ describe('ThreadRepositoryPostgres', () => {
   describe('getThreadById function', () => {
     it('shoudl return getThreadById correclty', async () => {
       // Arrange
-      const date = new Date()
+      const date = new Date();
       await ThreadsTableTestHelper.addUser({ username: 'developer' });
       await ThreadsTableTestHelper.addThread({ date });
 

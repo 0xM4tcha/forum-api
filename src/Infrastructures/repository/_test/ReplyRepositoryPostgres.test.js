@@ -19,7 +19,7 @@ describe('ReplyRepositoryPostgres', () => {
       // Arrange
       await RepliesTableTestHelper.addUser({ username: 'developer' });
       await RepliesTableTestHelper.addThread({ title: 'title baru' });
-      await RepliesTableTestHelper.addComment({ content: 'comment baru'});
+      await RepliesTableTestHelper.addComment({ content: 'comment baru' });
       const fakeIdGenerator = () => '123';
       const replyRepositoryPostgres = new ReplyRepositoryPostgres(
         pool,
@@ -37,8 +37,7 @@ describe('ReplyRepositoryPostgres', () => {
         userId: 'user-123'
       };
 
-      const reply =
-        await RepliesTableTestHelper.addReply(payloadAddReply);
+      const reply = await RepliesTableTestHelper.addReply(payloadAddReply);
       // Action & Assert
       if (reply?.rowCount) {
         expect(replyRepositoryPostgres.validateId(replyId)).rejects.toThrow(
@@ -141,7 +140,7 @@ describe('ReplyRepositoryPostgres', () => {
   describe('getRepliedComment function', () => {
     it('shoudl return getRepliedComment correclty', async () => {
       // Arrange
-      const date = new Date()
+      const date = new Date();
       await RepliesTableTestHelper.addUser({ username: 'developer' });
       await RepliesTableTestHelper.addThread({ title: 'new title' });
       await RepliesTableTestHelper.addComment({ content: 'new comment' });
@@ -154,7 +153,8 @@ describe('ReplyRepositoryPostgres', () => {
       );
 
       // Action
-      const replies = await replyRepositoryPostgres.getRepliedComment('comment-123');
+      const replies =
+        await replyRepositoryPostgres.getRepliedComment('comment-123');
       // Assert
       expect(replies[0]).toStrictEqual({
         reply_id: 'reply-123',

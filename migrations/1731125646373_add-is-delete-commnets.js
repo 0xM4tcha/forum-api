@@ -2,7 +2,7 @@
 
 exports.shorthands = undefined;
 
-exports.up = pgm => {
+exports.up = (pgm) => {
   pgm.addColumn('comments', {
     is_delete: {
       type: 'BOOLEAN',
@@ -12,6 +12,6 @@ exports.up = pgm => {
   });
 };
 
-exports.down = pgm => {
+exports.down = (pgm) => {
   pgm.dropColumn('comments', 'is_delete');
 };

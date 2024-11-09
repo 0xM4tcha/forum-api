@@ -62,12 +62,20 @@ describe('DeleteReplyUseCase', () => {
     const deletedReply = await getReplyUseCase.execute(useCasePayload);
 
     // Assert
-    expect(mockUserRepository.verifyUserId).toBeCalledWith(useCasePayload.userId);
-    expect(mockThreadRepository.validateId).toBeCalledWith(useCasePayload.threadId);
-    expect(mockCommentRepository.validateId).toBeCalledWith(useCasePayload.commentId);
-    expect(mockReplyRepository.validateId).toBeCalledWith(useCasePayload.replyId);
+    expect(mockUserRepository.verifyUserId).toBeCalledWith(
+      useCasePayload.userId
+    );
+    expect(mockThreadRepository.validateId).toBeCalledWith(
+      useCasePayload.threadId
+    );
+    expect(mockCommentRepository.validateId).toBeCalledWith(
+      useCasePayload.commentId
+    );
+    expect(mockReplyRepository.validateId).toBeCalledWith(
+      useCasePayload.replyId
+    );
     expect(mockReplyRepository.validateOwner).toBeCalledWith(useCasePayload);
-    
+
     expect(deletedReply).toStrictEqual({ status: 'success' });
   });
 });

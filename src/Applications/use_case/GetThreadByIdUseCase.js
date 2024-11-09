@@ -18,34 +18,36 @@ class GetThreadByIdUseCase {
       body: thread.thread_body,
       date: thread.thread_date,
       username: thread.username,
-      comments: comments.length > 0 && Object.values(
-        comments.reduce((acc, row) => {
-          if (!acc[row.comment_id]) {
-            acc[row.comment_id] = {
-              id: row.comment_id,
-              username: row.username,
-              date: row.comment_date,
-              content: row.comment_is_delete
-                ? '**komentar telah dihapus**'
-                : row.comment_content,
-              replies: []
-            };
-          }
+      comments:
+        comments.length > 0 &&
+        Object.values(
+          comments.reduce((acc, row) => {
+            if (!acc[row.comment_id]) {
+              acc[row.comment_id] = {
+                id: row.comment_id,
+                username: row.username,
+                date: row.comment_date,
+                content: row.comment_is_delete
+                  ? '**komentar telah dihapus**'
+                  : row.comment_content,
+                replies: []
+              };
+            }
 
-          acc[row.comment_id].replies = replies
-            .filter((reply) => reply.comment_id === row.comment_id)
-            .map((reply) => ({
-              id: reply.reply_id,
-              username: reply.username,
-              date: reply.username,
-              content: reply.reply_is_delete
-                ? '**balasan telah dihapus**'
-                : reply.reply_content
-            }));
+            acc[row.comment_id].replies = replies
+              .filter((reply) => reply.comment_id === row.comment_id)
+              .map((reply) => ({
+                id: reply.reply_id,
+                username: reply.username,
+                date: reply.username,
+                content: reply.reply_is_delete
+                  ? '**balasan telah dihapus**'
+                  : reply.reply_content
+              }));
 
-          return acc;
-        }, {})
-      )
+            return acc;
+          }, {})
+        )
     };
   }
 }

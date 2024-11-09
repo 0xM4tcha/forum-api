@@ -55,9 +55,15 @@ describe('AddReplyUseCase', () => {
     const addedReply = await getCommentUseCase.execute(useCasePayload);
 
     // Assert
-    expect(mockUserRepository.verifyUserId).toBeCalledWith(useCasePayload.userId);
-    expect(mockThreadRepository.validateId).toBeCalledWith(useCasePayload.threadId);
-    expect(mockCommentRepository.validateId).toBeCalledWith(useCasePayload.commentId);
+    expect(mockUserRepository.verifyUserId).toBeCalledWith(
+      useCasePayload.userId
+    );
+    expect(mockThreadRepository.validateId).toBeCalledWith(
+      useCasePayload.threadId
+    );
+    expect(mockCommentRepository.validateId).toBeCalledWith(
+      useCasePayload.commentId
+    );
     expect(mockReplyRepository.addReply).toBeCalledWith(
       new AddReply({
         id: 'reply-123',

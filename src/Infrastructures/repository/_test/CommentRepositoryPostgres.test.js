@@ -41,9 +41,9 @@ describe('CommentRepositoryPostgres', () => {
         await CommentsTableTestHelper.addComment(payloadAddComment);
       // Action & Assert
       if (comment?.rowCount) {
-        expect(commentRepositoryPostgres.validateId(payloadAddComment.commentId)).rejects.toThrow(
-          InvariantError
-        );
+        expect(
+          commentRepositoryPostgres.validateId(payloadAddComment.commentId)
+        ).rejects.toThrow(InvariantError);
       }
     });
 
@@ -73,7 +73,9 @@ describe('CommentRepositoryPostgres', () => {
         await CommentsTableTestHelper.addComment(payloadAddComment);
       // Action & Assert
       if (comment?.rowCount) {
-        expect(commentRepositoryPostgres.validateId(payloadAddComment.commentId)).toStrictEqual(commentId);
+        expect(
+          commentRepositoryPostgres.validateId(payloadAddComment.commentId)
+        ).toStrictEqual(commentId);
       }
     });
   });
@@ -156,7 +158,8 @@ describe('CommentRepositoryPostgres', () => {
       const deletedComment =
         await commentRepositoryPostgres.deleteComment(deleteComment);
       // Assert
-      const comments = await CommentsTableTestHelper.findCommentsById('comment-123');
+      const comments =
+        await CommentsTableTestHelper.findCommentsById('comment-123');
       expect(comments).toHaveLength(1);
       expect(comments[0].is_delete).toStrictEqual(true);
       expect(deletedComment).toStrictEqual({ status: 'success' });
@@ -166,7 +169,7 @@ describe('CommentRepositoryPostgres', () => {
   describe('getCommentedThread function', () => {
     it('shoudl return getCommentedThread correclty', async () => {
       // Arrange
-      const date = new Date()
+      const date = new Date();
       await CommentsTableTestHelper.addUser({ username: 'developer' });
       await CommentsTableTestHelper.addThread({ title: 'title baru' });
       await CommentsTableTestHelper.addComment({ date });
@@ -178,7 +181,8 @@ describe('CommentRepositoryPostgres', () => {
       );
 
       // Action
-      const comment = await commentRepositoryPostgres.getCommentedThread('thread-123');
+      const comment =
+        await commentRepositoryPostgres.getCommentedThread('thread-123');
       // Assert
       expect(comment[0]).toStrictEqual({
         comment_id: 'comment-123',

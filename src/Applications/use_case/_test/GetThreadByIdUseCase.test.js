@@ -27,7 +27,7 @@ describe('GetThreadByIdUseCase', () => {
     });
     const mockRepliedComment = new GetRepliedComment({
       commentId: 'comment-123'
-    })
+    });
 
     /** creating dependency of use case */
     const mockThreadRepository = new ThreadRepository();
@@ -56,8 +56,14 @@ describe('GetThreadByIdUseCase', () => {
     await getThreadUseCase.execute(useCasePayload);
 
     // Assert
-    expect(mockThreadRepository.getThreadById).toBeCalledWith(useCasePayload.threadId);
-    expect(mockCommentRepository.getCommentedThread).toBeCalledWith(useCasePayload.threadId);
-    expect(mockReplyRepository.getRepliedComment).toBeCalledWith(useCasePayload.commentId);
+    expect(mockThreadRepository.getThreadById).toBeCalledWith(
+      useCasePayload.threadId
+    );
+    expect(mockCommentRepository.getCommentedThread).toBeCalledWith(
+      useCasePayload.threadId
+    );
+    expect(mockReplyRepository.getRepliedComment).toBeCalledWith(
+      useCasePayload.commentId
+    );
   });
 });
