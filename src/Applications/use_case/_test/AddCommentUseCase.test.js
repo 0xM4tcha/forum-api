@@ -57,7 +57,9 @@ describe('AddCommentUseCase', () => {
         owner: 'user-123'
       })
     );
-
+    
+    expect(mockUserRepository.verifyUserId).toBeCalledWith(useCasePayload.userId);
+    expect(mockThreadRepository.validateId).toBeCalledWith(useCasePayload.threadId);
     expect(mockCommentRepository.addComment).toBeCalledWith(
       new AddComment({
         id: 'comment-123',

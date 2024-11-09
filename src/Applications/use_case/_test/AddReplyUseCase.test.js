@@ -55,14 +55,9 @@ describe('AddReplyUseCase', () => {
     const addedReply = await getCommentUseCase.execute(useCasePayload);
 
     // Assert
-    expect(addedReply).toStrictEqual(
-      new AddedReply({
-        id: 'comment-123',
-        content: useCasePayload.content,
-        owner: 'user-123'
-      })
-    );
-
+    expect(mockUserRepository.verifyUserId).toBeCalledWith(useCasePayload.userId);
+    expect(mockThreadRepository.validateId).toBeCalledWith(useCasePayload.threadId);
+    expect(mockCommentRepository.validateId).toBeCalledWith(useCasePayload.commentId);
     expect(mockReplyRepository.addReply).toBeCalledWith(
       new AddReply({
         id: 'reply-123',
@@ -70,6 +65,14 @@ describe('AddReplyUseCase', () => {
         commentId: 'comment-123',
         content: useCasePayload.content,
         userId: 'user-123'
+      })
+    );
+
+    expect(addedReply).toStrictEqual(
+      new AddedReply({
+        id: 'comment-123',
+        content: useCasePayload.content,
+        owner: 'user-123'
       })
     );
   });

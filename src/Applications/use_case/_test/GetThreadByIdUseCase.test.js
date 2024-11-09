@@ -33,6 +33,6 @@ describe('GetThreadByIdUseCase', () => {
     await getThreadUseCase.execute(useCasePayload);
 
     // Assert
-    expect(mockThreadRepository.getThreadById).toBeCalledWith('thread-123');
+    expect(mockThreadRepository.getThreadById).toBeCalledWith(useCasePayload.threadId);
   });
 });
