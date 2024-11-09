@@ -35,6 +35,6 @@ describe('a GetThreadById entities', () => {
     const thread = new GetThreadById(payload);
 
     // Assert
-    expect(thread.id).toEqual(payload.id);
+    expect(thread.threadId).toEqual(payload.threadId);
   });
 });

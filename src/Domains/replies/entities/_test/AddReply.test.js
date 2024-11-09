@@ -40,6 +40,7 @@ describe('a AddReply entities', () => {
     // Assert
     expect(userId).toEqual(payload.userId);
     expect(threadId).toEqual(payload.threadId);
+    expect(commentId).toEqual(payload.commentId);
     expect(content).toEqual(payload.content);
   });
 });

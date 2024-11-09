@@ -4,8 +4,7 @@ describe('a AddedReply entities', () => {
   it('should throw error when payload did not contain needed property', () => {
     // Arrange
     const payload = {
-      id: 'thread-123',
-      content: 'comment-123'
+      id: 'thread-123'
     };
 
     // Action and Assert

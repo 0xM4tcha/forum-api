@@ -4,9 +4,7 @@ describe('a AddedComment entities', () => {
   it('should throw error when payload did not contain needed property', () => {
     // Arrange
     const payload = {
-      id: '',
       content: 'comment dicoding',
-      owner: ''
     };
 
     // Action and Assert

@@ -36,10 +36,11 @@ describe('a DeleteReply entities', () => {
       userId: 'user-123'
     };
     // Action
-    const { threadId, commentId, replyId } = new DeleteReply(payload);
+    const { threadId, commentId, replyId, userId } = new DeleteReply(payload);
     // Assert
     expect(threadId).toEqual(payload.threadId);
     expect(commentId).toEqual(payload.commentId);
     expect(replyId).toEqual(payload.replyId);
+    expect(userId).toEqual(payload.userId);
   });
 });

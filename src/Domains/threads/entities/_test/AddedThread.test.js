@@ -4,8 +4,7 @@ describe('a AddedThread entities', () => {
   it('should throw error when payload did not contain needed property', () => {
     // Arrange
     const payload = {
-      id: 'thread-123',
-      title: 'dicoding'
+      id: 'thread-123'
     };
 
     // Action and Assert
@@ -21,7 +20,7 @@ describe('a AddedThread entities', () => {
     const payload = {
       id: 123,
       title: true,
-      owner: 'user-123'
+      owner: 123
     };
 
     // Action and Assert

@@ -1,9 +1,9 @@
 class CommentRepository {
-  async validateId(id) {
+  async validateId(commentId) {
     throw new Error('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 
-  async validateOwner(id) {
+  async validateOwner(commentId) {
     throw new Error('COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 
@@ -17,3 +17,4 @@ class CommentRepository {
 }
 
 module.exports = CommentRepository;
+ 
