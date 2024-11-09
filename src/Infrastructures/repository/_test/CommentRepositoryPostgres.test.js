@@ -26,7 +26,6 @@ describe('CommentRepositoryPostgres', () => {
       );
 
       const threadId = 'thread-123';
-      const commentId = 'comment-222';
 
       const payloadAddComment = {
         id: 'comment-123',
@@ -161,6 +160,34 @@ describe('CommentRepositoryPostgres', () => {
       expect(comments).toHaveLength(1);
       expect(comments[0].is_delete).toStrictEqual(true);
       expect(deletedComment).toStrictEqual({ status: 'success' });
+    });
+  });
+
+  describe('getCommentedThread function', () => {
+    it('shoudl return getCommentedThread correclty', async () => {
+      // Arrange
+      const date = new Date()
+      await CommentsTableTestHelper.addUser({ username: 'developer' });
+      await CommentsTableTestHelper.addThread({ title: 'title baru' });
+      await CommentsTableTestHelper.addComment({ date });
+
+      const fakeIdGenerator = () => '123';
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(
+        pool,
+        fakeIdGenerator
+      );
+
+      // Action
+      const comment = await commentRepositoryPostgres.getCommentedThread('thread-123');
+      // Assert
+      expect(comment[0]).toStrictEqual({
+        comment_id: 'comment-123',
+        comment_content: 'comment',
+        comment_date: date,
+        username: 'developer',
+        comment_is_delete: false,
+        thread_id: 'thread-123'
+      });
     });
   });
 });

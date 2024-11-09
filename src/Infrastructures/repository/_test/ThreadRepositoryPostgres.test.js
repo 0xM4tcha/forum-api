@@ -92,4 +92,30 @@ describe('ThreadRepositoryPostgres', () => {
       );
     });
   });
+
+  describe('getThreadById function', () => {
+    it('shoudl return getThreadById correclty', async () => {
+      // Arrange
+      const date = new Date()
+      await ThreadsTableTestHelper.addUser({ username: 'developer' });
+      await ThreadsTableTestHelper.addThread({ date });
+
+      const fakeIdGenerator = () => '123';
+      const threadRepositoryPostgres = new ThreadRepositoryPostgres(
+        pool,
+        fakeIdGenerator
+      );
+
+      // Action
+      const thread = await threadRepositoryPostgres.getThreadById('thread-123');
+      // Assert
+      expect(thread).toStrictEqual({
+        thread_id: 'thread-123',
+        thread_title: 'dicoding',
+        thread_body: 'dicoding indonesia',
+        thread_date: date,
+        username: 'developer'
+      });
+    });
+  });
 });

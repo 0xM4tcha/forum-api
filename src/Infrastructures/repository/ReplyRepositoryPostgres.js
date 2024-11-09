@@ -55,7 +55,6 @@ class ReplyRepositoryPostgres extends ReplyRepository {
 
   async deleteReply(payload) {
     const { replyId, userId } = payload;
-    // const content = '**balasan telah dihapus**';
     const date = new Date().toISOString();
 
     const query = {
@@ -70,6 +69,33 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     return {
       status: 'success'
     };
+  }
+
+  async getRepliedComment(commentId) {
+    const query = {
+      text: `SELECT
+        r.id AS reply_id,
+        r.date AS reply_date,
+        r.content AS reply_content,
+        r.is_delete AS reply_is_delete,
+        r.comment_id AS comment_id,
+        u.username AS username
+      From
+        replies r
+      JOIN
+        users u ON r.owner = u.id
+      WHERE
+        r.comment_id = $1`,
+      values: [commentId]
+    }
+
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      return [];
+    }
+
+    return result.rows;
   }
 }
 

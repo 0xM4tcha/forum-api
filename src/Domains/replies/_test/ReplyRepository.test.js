@@ -13,5 +13,8 @@ describe('ReplyRepository interface', () => {
     await expect(replyRepository.deleteReply({})).rejects.toThrowError(
       'REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     );
+    await expect(replyRepository.getRepliedComment({})).rejects.toThrowError(
+      'REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED'
+    );
   });
 });

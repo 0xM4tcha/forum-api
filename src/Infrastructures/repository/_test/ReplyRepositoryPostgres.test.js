@@ -137,4 +137,33 @@ describe('ReplyRepositoryPostgres', () => {
       expect(deletedReply).toStrictEqual({ status: 'success' });
     });
   });
+
+  describe('getRepliedComment function', () => {
+    it('shoudl return getRepliedComment correclty', async () => {
+      // Arrange
+      const date = new Date()
+      await RepliesTableTestHelper.addUser({ username: 'developer' });
+      await RepliesTableTestHelper.addThread({ title: 'new title' });
+      await RepliesTableTestHelper.addComment({ content: 'new comment' });
+      await RepliesTableTestHelper.addReply({ date });
+
+      const fakeIdGenerator = () => '123';
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(
+        pool,
+        fakeIdGenerator
+      );
+
+      // Action
+      const replies = await replyRepositoryPostgres.getRepliedComment('comment-123');
+      // Assert
+      expect(replies[0]).toStrictEqual({
+        reply_id: 'reply-123',
+        comment_id: 'comment-123',
+        reply_content: 'reply',
+        reply_date: date,
+        username: 'developer',
+        reply_is_delete: false
+      });
+    });
+  });
 });

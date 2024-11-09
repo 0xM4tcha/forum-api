@@ -1,4 +1,4 @@
-class GetThreadById {
+class GetCommentedThread {
   constructor(payload) {
     this._verifyPayload(payload);
 
@@ -9,13 +9,13 @@ class GetThreadById {
     const { threadId } = payload;
 
     if (!threadId) {
-      throw new Error('GET_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
+      throw new Error('GET_COMMENTED_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
     if (typeof threadId !== 'string') {
-      throw new Error('GET_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
+      throw new Error('GET_COMMENTED_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
   }
 }
 
-module.exports = GetThreadById;
+module.exports = GetCommentedThread;

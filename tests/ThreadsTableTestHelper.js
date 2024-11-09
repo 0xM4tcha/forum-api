@@ -21,7 +21,7 @@ const ThreadsTableTestHelper = {
     title = 'dicoding',
     body = 'dicoding indonesia',
     date = '2021-08-08T07:59:16.198Z',
-    userId = 'user_1234'
+    userId = 'user-123'
   }) {
     const query = {
       text: 'INSERT INTO threads VALUES($1, $2, $3, $4, $5)',
