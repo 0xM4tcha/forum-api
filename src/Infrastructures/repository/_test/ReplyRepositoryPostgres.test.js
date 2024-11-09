@@ -14,39 +14,39 @@ describe('ReplyRepositoryPostgres', () => {
     await pool.end();
   });
 
-  // describe('validateId function', () => {
-  //   it('should error when commentId not valid', async () => {
-  //     // Arrange
-  //     await RepliesTableTestHelper.addUser({ username: 'dicoding' });
-  //     const fakeIdGenerator = () => '123';
-  //     const replyRepositoryPostgres = new ReplyRepositoryPostgres(
-  //       pool,
-  //       fakeIdGenerator
-  //     );
+  describe('validateId function', () => {
+    it('should error when replyId not valid', async () => {
+      // Arrange
+      await RepliesTableTestHelper.addUser({ username: 'developer' });
+      await RepliesTableTestHelper.addThread({ title: 'title baru' });
+      await RepliesTableTestHelper.addComment({ content: 'comment baru'});
+      const fakeIdGenerator = () => '123';
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(
+        pool,
+        fakeIdGenerator
+      );
 
-  //     const threadId = 'thread-123';
-  //     const commentId = 'comment-123';
+      const threadId = 'thread-123';
+      const replyId = 'reply-123';
 
-  //     const payloadAddComment = {
-  //       id: 'comment-123',
-  //       threadId,
-  //       content: 'comment dicoding',
-  //       date: '2021-08-08T07:59:16.198Z',
-  //       userId: 'user-123'
-  //     };
+      const payloadAddReply = {
+        id: 'reply-123',
+        threadId,
+        content: 'reply dicoding',
+        date: '2021-08-08T07:59:16.198Z',
+        userId: 'user-123'
+      };
 
-  //     await RepliesTableTestHelper.addThread({ title: 'test' });
-
-  //     const comment =
-  //       await RepliesTableTestHelper.addComment(payloadAddComment);
-  //     // Action & Assert
-  //     if (comment?.rowCount) {
-  //       expect(replyRepositoryPostgres.validateId(commentId)).rejects.toThrow(
-  //         InvariantError
-  //       );
-  //     }
-  //   });
-  // });
+      const reply =
+        await RepliesTableTestHelper.addReply(payloadAddReply);
+      // Action & Assert
+      if (reply?.rowCount) {
+        expect(replyRepositoryPostgres.validateId(replyId)).rejects.toThrow(
+          InvariantError
+        );
+      }
+    });
+  });
 
   describe('addReply function', () => {
     it('should persist addReply', async () => {
@@ -109,10 +109,10 @@ describe('ReplyRepositoryPostgres', () => {
   describe('deleteReply function', () => {
     it('should persist deleteReply', async () => {
       // Arrange
-      await RepliesTableTestHelper.addUser({ username: 'dicoding' });
-      await RepliesTableTestHelper.addThread({ title: 'dicoding' });
-      await RepliesTableTestHelper.addComment({ content: 'comment' });
-      await RepliesTableTestHelper.addReply({ content: 'reply' });
+      await RepliesTableTestHelper.addUser({ username: 'developer' });
+      await RepliesTableTestHelper.addThread({ title: 'title baru' });
+      await RepliesTableTestHelper.addComment({ content: 'comment baru' });
+      await RepliesTableTestHelper.addReply({ content: 'reply baru' });
 
       const deleteReply = new DeleteReply({
         commentId: 'comment-123',
@@ -131,6 +131,9 @@ describe('ReplyRepositoryPostgres', () => {
       const deletedReply =
         await replyRepositoryPostgres.deleteReply(deleteReply);
       // Assert
+      const replies = await RepliesTableTestHelper.findRepliesById('reply-123');
+      expect(replies).toHaveLength(1);
+      expect(replies[0].is_delete).toStrictEqual(true);
       expect(deletedReply).toStrictEqual({ status: 'success' });
     });
   });

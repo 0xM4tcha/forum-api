@@ -36,7 +36,7 @@ describe('a AddReply entities', () => {
       content: 'Reply Dicoding Indonesia'
     };
     // Action
-    const { userId, threadId, content } = new AddReply(payload);
+    const { userId, threadId, content, commentId } = new AddReply(payload);
     // Assert
     expect(userId).toEqual(payload.userId);
     expect(threadId).toEqual(payload.threadId);

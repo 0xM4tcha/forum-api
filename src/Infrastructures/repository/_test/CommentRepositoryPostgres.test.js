@@ -26,6 +26,38 @@ describe('CommentRepositoryPostgres', () => {
       );
 
       const threadId = 'thread-123';
+      const commentId = 'comment-222';
+
+      const payloadAddComment = {
+        id: 'comment-123',
+        threadId,
+        content: 'comment dicoding',
+        date: '2021-08-08T07:59:16.198Z',
+        userId: 'user-123'
+      };
+
+      await CommentsTableTestHelper.addThread({ title: 'test' });
+
+      const comment =
+        await CommentsTableTestHelper.addComment(payloadAddComment);
+      // Action & Assert
+      if (comment?.rowCount) {
+        expect(commentRepositoryPostgres.validateId(payloadAddComment.commentId)).rejects.toThrow(
+          InvariantError
+        );
+      }
+    });
+
+    it('should not error when commentId is valid', async () => {
+      // Arrange
+      await CommentsTableTestHelper.addUser({ username: 'dicoding' });
+      const fakeIdGenerator = () => '123';
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(
+        pool,
+        fakeIdGenerator
+      );
+
+      const threadId = 'thread-123';
       const commentId = 'comment-123';
 
       const payloadAddComment = {
@@ -42,9 +74,7 @@ describe('CommentRepositoryPostgres', () => {
         await CommentsTableTestHelper.addComment(payloadAddComment);
       // Action & Assert
       if (comment?.rowCount) {
-        expect(commentRepositoryPostgres.validateId(commentId)).rejects.toThrow(
-          InvariantError
-        );
+        expect(commentRepositoryPostgres.validateId(payloadAddComment.commentId)).toStrictEqual(commentId);
       }
     });
   });
@@ -107,8 +137,9 @@ describe('CommentRepositoryPostgres', () => {
   describe('deleteComment function', () => {
     it('should persist deleteComment', async () => {
       // Arrange
-      await CommentsTableTestHelper.addUser({ username: 'dicoding' });
-      await CommentsTableTestHelper.addThread({ title: 'test' });
+      await CommentsTableTestHelper.addUser({ username: 'developer' });
+      await CommentsTableTestHelper.addThread({ title: 'title baru' });
+      await CommentsTableTestHelper.addComment({ content: 'comment baru' });
 
       const deleteComment = new DeleteComment({
         commentId: 'comment-123',
@@ -126,6 +157,9 @@ describe('CommentRepositoryPostgres', () => {
       const deletedComment =
         await commentRepositoryPostgres.deleteComment(deleteComment);
       // Assert
+      const comments = await CommentsTableTestHelper.findCommentsById('comment-123');
+      expect(comments).toHaveLength(1);
+      expect(comments[0].is_delete).toStrictEqual(true);
       expect(deletedComment).toStrictEqual({ status: 'success' });
     });
   });
